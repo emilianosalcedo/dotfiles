@@ -1,0 +1,5 @@
+## youtube-dl config file
+
+--prefer-ffmpeg
+--restrict-filenames
+-o "%(title)s.%(ext)s"

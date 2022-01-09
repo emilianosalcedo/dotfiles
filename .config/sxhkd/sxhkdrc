@@ -1,0 +1,98 @@
+## RESTART HOTKEY DAEMON
+super + shift + x
+  pkill -x -SIGUSR1 sxhkd
+
+## EXIT
+super + shift + q
+  dmenu-exit.sh
+
+## PAUSE ALL MEDIA
+super + shift + p
+  pause-media.sh
+
+## LOCK THE SCREEN
+super + b
+  lock.sh
+
+## MENU
+super + d
+  dmenu.sh run
+
+super + shift + d
+  dmenu.sh desktop
+
+## SCREENSHOTS
+super + Print
+	dmenu-screenshots.sh
+
+Print
+  screenshots.sh region
+
+shift + Print
+  screenshots.sh window-active
+
+control + Print
+  screenshots.sh copy
+
+## SCREENCASTS
+super + s
+  dmenu-record.sh
+
+super + shift + s
+  screen-capture.sh kill
+
+super + v
+  screen-capture.sh watermark
+
+## CLIPBOARD
+super + p
+  dmenu-clipboard.sh
+
+## PASSWORD MANAGER
+super + m
+  dmenu-pass.sh
+
+## BOOKMARKS
+super + w
+  dmenu-bookmarks.sh
+
+## CALCULATOR
+super + g
+  dmenu-calc.sh
+
+super + x
+  $TERMINAL -T 'calculator' -e 'python'
+
+## APPS
+super + Return
+  $TERMINAL
+
+super + shift + b
+  $BROWSER
+
+## BRIGHTNESS
+# super + {Right, Left}
+#   light {-A 5, -U 5} && polybar-msg hook backlight 1
+
+## VOLUME
+#super + {F3, F2}
+#  pulsevolctrl "output-vol" "alsa_output.pci-0000_0b_00.4.analog-stereo" {+2%, -2%}
+#
+#super + F4
+#  pulsevolctrl "output-mute" "alsa_output.pci-0000_0b_00.4.analog-stereo"
+
+## MEDIA CONTROLS
+#super + F8
+#  playerctl -p "mpd" next
+#
+#super + F6
+#  playerctl -p "mpd" previous
+#
+#super + F7
+#  playerctl -p "mpd" play-pause
+#
+#super + F5
+#  playerctl -p "mpd" stop
+
+#super + alt + {r, h, n, c, p, a}
+#  $TERMINAL -e {ranger, htop, nvim, calcurse, pulsemixer, alsamixer}

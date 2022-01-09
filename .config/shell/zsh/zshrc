@@ -1,0 +1,161 @@
+## IF NOT RUNNING INTERACTIVELY, DON'T DO ANYTHING
+case "$-" in
+  *i*) ;;
+  *) return ;;
+esac
+
+## ENABLE AND LOAD COLORS
+autoload -U colors && colors
+
+## CHANGE PROMPT
+PS1="%B%{$fg[magenta]%}[ %{$fg[blue]%} %1~%{$fg[magenta]%} ]%{$fg[white]%}$%{$reset_color%}%b "
+RPS1="%B%(1j. .)%(?..%{$fg[red]%} )%{$reset_color%}%b\$vcs_info_msg_0_"
+
+## ENABLE VCS SUPPORT
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info; }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:*' stagedstr ''
+zstyle ':vcs_info:*' unstagedstr ''
+zstyle ':vcs_info:git:*' formats "%{$fg[yellow]%}( %b) %{$fg[red]%}%u%{$reset_color%}"
+zstyle ':vcs_info:git:*' actionformats "%{$fg[yellow]%}( %b) %{$fg[red]%}%a%{$reset_color%}"
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+
+# RANGER PROMPT
+[ -n "${RANGER_LEVEL}" ] && export PS1="%{$fg[yellow]%}[ranger] ${PS1}"
+
+## AUTOMATICALLY CD INTO TYPED DIRECTORY
+setopt autocd
+
+## CASE INSENSITIVE
+setopt nocaseglob
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+## BASIC AUTOTAB COMPLETE
+autoload -Uz compinit; compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+#zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+#zstyle ':completion:*' group-name ''
+#zstyle ':completion:*' file-list all
+#zstyle ':completion:*' file-sort modification
+#zstyle ':completion:*' squeeze-slashes true
+#zstyle ':completion::complete:*' gain-privileges 1
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
+zstyle ':completion:*:*:killall:*' menu yes select
+zstyle ':completion:*:killall:*'   force-list always
+zmodload zsh/complist
+setopt COMPLETE_ALIASES
+
+# INCLUDE HIDDEN FILES
+#_comp_options+=(globdots)
+
+## DISABLE CTRL-S TO FREEZE TERMINAL
+stty stop undef
+setopt interactive_comments
+
+## HISTORY
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE="${XDG_CONFIG_HOME}/shell/zsh/zsh_history"
+setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_DUPS
+setopt INTERACTIVECOMMENTS
+
+## LOAD ALIASES AND FUNCTIONS IF EXIST
+[ -f "${XDG_CONFIG_HOME}/shell/aliases" ] && . "${XDG_CONFIG_HOME}/shell/aliases"
+[ -f "${XDG_CONFIG_HOME}/shell/functions" ] && . "${XDG_CONFIG_HOME}/shell/functions"
+
+## ENABLE COLOR SUPPORT OF LS
+if [ -x /usr/bin/dircolors ]; then
+  test -r "${XDG_CONFIG_HOME}/shell/dir_colors" && \
+    eval "$(dircolors -b "${XDG_CONFIG_HOME}/shell/dir_colors")" || \
+    eval "$(dircolors -b)"
+fi
+
+## VI MODE
+bindkey -v
+export KEYTIMEOUT=1
+
+## USE VIM KEYS IN TAB COMPLETE MENU
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+
+## EDIT LINE IN VIM WITH CTRL-E
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
+## CHANGE CURSOR SHAPE FOR DIFFERENT VI MODES.
+zle-keymap-select() {
+  case "${KEYMAP}" in
+    # UNDERLINE
+    vicmd) echo -ne '\e[3 q';;
+    # BLOCK
+    viins|main) echo -ne '\e[1 q';;
+  esac
+}
+
+## INITIATE `vi insert` AS KEYMAP (CAN BE REMOVED IF `bindkey -V` HAS BEEN SET ELSEWHERE)
+zle-line-init() {
+  zle -K viins
+  echo -ne "\e[1 q"
+}
+
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+## USE BLOCK SHAPE CURSOR ON STARTUP
+echo -ne '\e[1 q'
+
+## USE BLOCK SHAPE CURSOR FOR EACH NEW PROMPT
+preexec() { echo -ne '\e[1 q'; }
+
+## YANK
+vi-x-yank() {
+    #zle vi-yank
+    zle copy-region-as-kill
+    echo "${CUTBUFFER}" | xclip -selection clipboard
+}
+
+## CUT
+vi-x-cut() {
+    zle kill-region
+    echo "${CUTBUFFER}" | xclip -selection primary
+}
+
+## PASTE
+vi-x-paste() {
+    prim="$(xclip -selection primary -o 2>/dev/null)"
+    clip="$(xclip -selection clipboard -o 2>/dev/null)"
+    [ "${prim}" != "${clip}" ] && [ -n "${clip}" ] && PASTE="${clip}" || PASTE="${prim}"
+    [ -n "${PASTE}" ] && LBUFFER="${LBUFFER}${RBUFFER:0:1}"
+    [ -n "${PASTE}" ] && RBUFFER="${PASTE}${RBUFFER:1:${#RBUFFER}}"
+}
+
+## CLIPBOARD IN VI MODE
+zle -N vi-x-yank
+zle -N vi-x-cut
+zle -N vi-x-paste
+bindkey -M vicmd "y" vi-x-yank
+bindkey -M vicmd "d" vi-x-cut
+bindkey -M vicmd "p" vi-x-paste
+
+## rm DON'T ASK FOR CONFIRMATION
+setopt rmstarsilent
+
+## SHORTCUTS
+#bindkey -s '^a' 'bc -lq\n'
+#bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+#bindkey '^[[P' delete-char
+
+## LOAD SYNTAX HIGHLIGHTING, AUTOSUGGESTIONS AND COMMAND NOT FOUND; SHOULD BE LAST
+. /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. /etc/zsh_command_not_found

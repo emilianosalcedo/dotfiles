@@ -1,0 +1,31 @@
+                    [47m                         [m
+                    [47m [30m[40mMMMMMMMMMMMMMMMMMMMMMMM[47m [m
+             [47m        [30m[40mMMMMMMMMMMMMMMMMMMMMMMM[47m        [m
+             [47m [30m[40mMMMMMMMMMMM[47m    [42m       [47m    [40mMMMMMMMMMMM[47m [m
+          [47m    [30m[40mMMMMMMMMMMM[47m    [42m       [47m    [40mMMMMMMMMMMM[47m    [m
+          [47m [30m[40mMMMMMM[47m            [42m       [47m            [40mMMMMMM[47m [m
+       [47m    [30m[40mMMMMMM[47m            [42m       [47m            [40mMMMMMM[47m    [m
+       [47m [30m[40mMMMMMM[42m   [47m         [42m             [47m         [42m   [40mMMMMMM[47m [m
+       [47m [30m[40mMMMMMM[42m   [47m         [42m             [47m         [42m   [40mMMMMMM[47m [m
+       [47m [30m[40mMMM[47m   [42m                                     [47m   [40mMMM[47m [m
+   [47m     [30m[40mMMM[47m   [42m                                     [47m   [40mMMM[47m     [m
+   [47m [30m[40mMMMMMMM[47m      [42m       [47m                 [42m       [47m      [40mMMMMMMM[47m [m
+   [47m [30m[40mMMMMMMM[47m      [42m       [47m                 [42m       [47m      [40mMMMMMMM[47m [m
+   [47m [30m[40mMMMM[47m         [42m    [47m                       [42m    [47m         [40mMMMM[47m [m
+   [47m [30m[40mMMMM[47m         [42m    [47m                       [42m    [47m         [40mMMMM[47m [m
+   [47m [30m[40mMMMM[47m      [42m       [47m                       [42m       [47m      [40mMMMM[47m [m
+   [47m [30m[40mMMMM[47m      [42m       [47m                       [42m       [47m      [40mMMMM[47m [m
+   [47m [30m[40mMMMM[42m                [47m                 [42m                [40mMMMM[47m [m
+   [47m [30m[40mMMMM[42m                [47m                 [42m                [40mMMMM[47m [m
+   [47m [30m[40mMMMM[42m      [40mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM[42m      [40mMMMM[47m [m
+   [47m [30m[40mMMMM[42m      [40mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM[42m      [40mMMMM[47m [m
+   [47m [30m[40mMMMMMMMMMMMMM[47m         [40mMMM[47m       [40mMMM[47m         [40mMMMMMMMMMMMMM[47m [m
+   [47m [30m[40m    MMMMMM   [47m         [40mMMM[47m       [40mMMM[47m         [40m   MMMMMM   O[47m [m
+   [47m     [30m[40mMMMMMM[47m            [40mMMM[47m       [40mMMM[47m            [40mMMMMMM[47m     [m
+       [47m [30m[40mDDDMMM[47m            [40mDDD[47m       [40mDDD[47m            [40mMMMDDD[47m [m
+       [47m    [30m[40mMMM[47m                                     [40mMMM[47m    [m
+          [47m [30m[40mMMMMMM[47m                               [40mMMMMMM[47m [m
+          [47m [30m[40mMMMMMM[47m                               [40mMMMMMM[47m [m
+          [47m    [30m[40mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM[47m    [m
+             [47m [30m[40mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM[47m [m
+             [47m                                       [m

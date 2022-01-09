@@ -1,0 +1,8 @@
+password-store/
+privkey.asc
+subkey.gpg
+bookmarks.html
+bookmarks.db*
+**/calcurse/todo
+**/calcurse/apts
+**/calcurse/notes/**

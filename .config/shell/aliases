@@ -1,0 +1,190 @@
+# ~/.aliases: definitions.
+# This file has to be sourced.
+
+#===============================================================================
+## -- ALIASES ------------------------------------------------------------------
+#===============================================================================
+
+## ADD AN "alert" ALIAS FOR LONG RUNNING COMMANDS.  USE LIKE SO:
+## sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#alias ls='ls -CNh --sort=extension --color=auto --group-directories-first --time-style=long-iso'
+alias ls='exa -g -h --extended --sort=extension --colour=automatic --colour-scale --group-directories-first --time-style=long-iso --git --icons'
+alias lh='ls -d .[^.]*'
+alias ld='ls -d */'
+alias ll='ls -l'
+alias la='ls -a'
+alias l='ls -al'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias tree='ls --tree'
+#alias sudo='doas'
+#alias sudoedit='doasedit'
+alias cat='batcat --paging=never'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias rgrep='rg'
+alias fd='fdfind'
+#alias curl='http -b'
+alias cp='cp -iv --preserve=all'
+alias mv='mv -iv'
+alias rm='rm -Iv --preserve-root'
+alias ln='ln -iv'
+alias mkdir='mkdir -pv'
+alias df='df -Th --exclude=squashfs --exclude-type=tmpfs --exclude-type=devtmpfs'
+alias diff='diff --color'
+alias du='du -csh'
+alias ducks='/usr/bin/du -cks * | sort -rn | head'
+alias free='free -h'
+alias lsblk='lsblk --exclude 7,11'
+alias chmod='chmod -c --preserve-root'
+alias chown='chown -c --preserve-root'
+alias watch='watch -d'
+alias wget='wget -c'
+#alias rsync='rsync --delete --progress'
+alias temp='sensors coretemp-isa-0000 -A | grep "Core"'
+alias upgrade='sudo apt update && sudo apt dist-upgrade -y'
+alias clean='sudo apt-get autoclean && sudo apt-get autoremove && sudo apt-get clean'
+alias upip="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n 1 sudo -H pip3 install -U"
+#alias upip="pip3 list | awk 'NR > 2 { print $1; }' | xargs -n 1 pip3 install --user -U"
+alias upgrade-all='upgrade && upip'
+alias pip='pip3'
+alias sortip='sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4'
+alias ports='netstat -tulanp'
+alias cls="printf '\033c'"
+#alias cls="tput reset"
+#alias cls='clear && echo -en "\e[3J"' ## For KDE terminal Konsole
+alias ulogout='pkill -KILL -u "${USER}"'
+alias apagar='shutdown now'
+alias reiniciar='shutdown -r now'
+alias startx="startx ${XINITRC}"
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o 2>/dev/null || xclip -selection primary -o 2>/dev/null'
+alias pbsel='xclip -selection primary'
+alias pbclean='xclip -selection clipboard -i /dev/null && xclip -selection primary -i /dev/null'
+alias ffmpeg='ffmpeg -hide_banner'
+alias ffprobe='ffprobe -hide_banner -v quiet -show_streams -show_format'
+alias calcurse="calcurse --confdir ${XDG_CONFIG_HOME}/calcurse/ --datadir ${XDG_CONFIG_HOME}/calcurse/"
+alias open='xdg-open'
+alias tmux="tmux -f ${XDG_CONFIG_HOME}/tmux/tmux.conf"
+alias clima='command curl -s -H "Accept-Language: es" "https://wttr.in/${LOCATION}?lang=es"'
+alias clima2='command curl -s -H "Accept-Language: es" "https://wttr.in/${LOCATION}?lang=es&format=3"'
+alias clima3='command curl -s H "Accept-Language: es" "https://wttr.in/${LOCATION}?lang=es&format=4"'
+alias clima4='command curl -s -H "Accept-Language: es" "https://wttr.in/${LOCATION}?lang=es&format=%t"'
+alias clima5='command curl -ks "https://v3.wttr.in"'
+alias clima6='command curl -ks "https://v2.wttr.in"'
+alias clima-help='command curl -s "https://wttr.in/:help"'
+alias luna='command curl -s "https://wttr.in/moon"'
+alias mapscii='telnet mapscii.me'
+alias myserver='python3 -m http.server 8000'
+alias myip='echo $(command curl -s ifconfig.me)'
+alias myip2='command curl -s http://checkip.dyndns.org:8245/ | egrep -o "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"'
+alias myip3="http -p b GET 'https://ipapi.co/json'"
+alias ip="ip -c -br"
+alias starwars="telnet towel.blinkenlights.nl"
+alias termbin='nc termbin.com 9999'
+alias pastec='nc paste.c-net.org 9999'
+alias tetris='ssh netris.rocketnine.space'
+alias htop='bpytop'
+#alias htop='btop'
+alias vim='nvim'
+alias vip='vim -p'
+alias fzf='fzf -m --border'
+alias feh='feh --theme normal'
+alias open='xdg-open'
+alias neofetch='pfetch.sh'
+alias espeak='espeak-ng'
+alias sc='sc-im'
+alias music='ncmpcpp'
+alias sxiv='sxiv -p -a'
+alias anime='ani-cli'
+alias compgen='printf "${PATH//:/\n}\n"'
+alias randword='sort -R /usr/share/dict/words | head -n 1'
+alias emu='/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_'
+alias xampp='sudo /opt/lampp/manager-linux-x64.run'
+alias mysql-lamp='/opt/lampp/bin/mysql -u root'
+#alias android-cam='droidcam-cli -a -v adb 4747'
+#alias android-mic='pacmd load-module module-alsa-source device=hw:Loopback,1,0'
+alias dl-zoom="wget 'https://zoom.us/client/latest/zoom_amd64.deb'"
+alias rivadavia="mpv --volume=30 --input-ipc-server='' -- 'https://24923.live.streamtheworld.com/RIVADAVIAAAC.aac'"
+alias radioblue="mpv --volume=30 --input-ipc-server='' -- 'https://18733.live.streamtheworld.com/BLUE_FM_100_7AAC.aac?dist=triton-widget&tdsdk=js-2.9&pname=tdwidgets&pversion=2.9&banners=none&sbmid=7a33de9d-d6d1-4dcb-99f0-015a96d64e8f'"
+alias lanacion="(youtube-dl -j 'ytsearch1: La Nacion Mas' | jq -r '.webpage_url' | setsid mpv --input-ipc-server='' --ytdl-format=92 --volume=100 --playlist=- &) >/dev/null 2>&1"
+#alias lanacion="{ youtube-dl -o - $(youtube-dl -j 'ytsearch1: La Nacion Mas' | jq -r '.webpage_url') | setsid mpv --input-ipc-server='' --ytdl-format=92 --volume=100 -; } >/dev/null 2>&1 &"
+alias radiocode="mpv --volume=30 --input-ipc-server='' -- 'https://coderadio-relay-blr.freecodecamp.org/radio/8010/radio.mp3'"
+alias dolarblue="http -p b GET 'https://api.bluelytics.com.ar/v2/latest' | jq '.blue.value_sell'"
+alias obsidian="setsid ~/Descargas/Obsidian-*.AppImage >/dev/null 2>&1 &"
+
+#===============================================================================
+## -- FILES --------------------------------------------------------------------
+#===============================================================================
+
+alias ez='vim "${XDG_CONFIG_HOME}/shell/zsh/zshrc"'
+alias ep='vim "${XDG_CONFIG_HOME}/shell/profile"'
+alias ea='vim "${XDG_CONFIG_HOME}/shell/aliases"'
+alias ef='vim "${XDG_CONFIG_HOME}/shell/functions"'
+alias exp='vim "${XDG_CONFIG_HOME}/x11/xprofile"'
+alias exm='vim "${XDG_CONFIG_HOME}/x11/xmodmaprc"'
+alias exi='vim "${XDG_CONFIG_HOME}/x11/xinitrc"'
+alias exr='vim "${XDG_CONFIG_HOME}/x11/Xresources"'
+alias et='vim "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
+alias ev='vim "${XDG_CONFIG_HOME}/nvim/init.vim"'
+alias es='vim "${XDG_CONFIG_HOME}/sxhkd/sxhkdrc"'
+alias ei='vim "${XDG_CONFIG_HOME}/i3/config"'
+alias eb='vim "${XDG_CONFIG_HOME}/i3blocks/i3blocks.conf"'
+
+#===============================================================================
+## -- DIRECTORIES --------------------------------------------------------------
+#===============================================================================
+
+alias gh='cd "${HOME}"'
+alias gi='cd "$(xdg-user-dir PICTURES)/"'
+alias ge='cd "$(xdg-user-dir DESKTOP)/"'
+alias gd='cd "$(xdg-user-dir DOCUMENTS)/"'
+alias gD='cd "$(xdg-user-dir DOWNLOAD)/"'
+alias gm='cd "$(xdg-user-dir MUSIC)/"'
+alias gv='cd "$(xdg-user-dir VIDEOS)/"'
+alias gP='cd "${HOME}/Projects/"'
+alias gb='cd "${HOME}/Dropbox/"'
+alias gC='cd "${XDG_CONFIG_HOME}"'
+alias gS='cd "${XDG_DATA_HOME}"'
+alias gO='cd "${XDG_CACHE_HOME}"'
+alias gl='cd "${HOME}/.local/bin"'
+alias gw='cd "$(xdg-user-dir PICTURES)/wallpapers/"'
+alias gp='cd "$(xdg-user-dir PICTURES)/screenshots/"'
+alias gr='cd "$(xdg-user-dir VIDEOS)/screencasts/"'
+alias gG='cd "${HOME}/Projects/repositorios/"'
+alias go='cd /tmp/'
+alias gM='cd /media/'
+alias gN='cd /mnt/'
+
+#===============================================================================
+## -- REMOTOS ------------------------------------------------------------------
+#===============================================================================
+
+alias ambrosia="xfreerdp /u:administrator '/p:9Uiv1JaZyQdbJ8rB72SQ' /v:185.166.214.170:1210 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias benedicto="xfreerdp /u:administrator '/p:wPFz6rs8px8o3J2io4oN' /v:185.166.213.212:1210 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias dinamarca="xfreerdp /u:administrator '/p:nqEAI2gS19kX2zVfLjgT' /v:85.208.21.242:1210 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias ebano="xfreerdp /u:administrator '/p:YiVndwWj8bLim7M7TTkj' /v:46.183.116.50:1210 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias colibri="xfreerdp /u:administrator '/p:aUdHhxyBC1bdjfACnf5Z' /v:185.166.215.185 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias gaudi="xfreerdp /u:administrator '/p:DcJINiK4AevzytL3FytM' /v:46.183.116.112 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias haiti="xfreerdp /u:administrator '/p:82WWfxmNAYvmze6BDc5A' /v:161.22.44.191 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias stripe="xfreerdp /u:administrator '/p:O9FpST5KKcxEbWWcMmIv' /v:46.183.112.194:1210 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+
+alias ambrosia2="xfreerdp /u:administrator '/p:DSf5xab63wnoH3e' /v:95.111.243.171 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias benedicto2="xfreerdp /u:administrator '/p:gCGaM9tX3eWUc' /v:95.111.243.110 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias dinamarca2="xfreerdp /u:administrator '/p:eduqueo--dina81' /v:95.111.233.157 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias ebano2="xfreerdp /u:administrator '/p:FcwdDsNLfL37e3qX' /v:95.111.243.95 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias colibri2="xfreerdp /u:administrator '/p:9E3d6CPgDJ7Bbes' /v:95.111.243.9 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+
+alias contabo128="xfreerdp /u:administrator '/p:JCDV5r79A4AqeQ' /v:5.189.176.94 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias remoto40="xfreerdp /u:administrator '/p:remoto40eduqueo-21' /v:95.111.243.148 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+alias remoto41="xfreerdp /u:administrator '/p:MVI1qM4ffJage6x7iaOU' /v:161.22.40.185 /size:100% /audio-mode:0 -grab-keyboard +clipboard"
+
+#===============================================================================
+## -- SERVERS ------------------------------------------------------------------
+#===============================================================================
+
+alias amzn='ssh -i /home/fenrir/.LightsailDefaultKey-us-west-2.pem ubuntu@54.202.245.64'
+alias wordpress='ssh -i /home/fenrir/.LightsailDefaultKey-us-east-1.pem bitnami@54.166.59.31'
+alias hostinger='ssh -p 65002 u252323624@45.87.81.51'

@@ -1,0 +1,31 @@
+# ~/.logout: executed by $SHELL when login shell exits.
+
+# clear temp
+[ -f ~/.config/shell/zsh/zsh_history ] && rm ~/.config/shell/zsh/zsh_history
+[ -f ~/.mysql_history ] && rm ~/.mysql_history
+[ -f ~/.sqlite_history ] && rm ~/.sqlite_history
+[ -f ~/.python_history ] && rm -rf ~/.python_history
+[ -f ~/.lesshst ] && rm ~/.lesshst
+[ -f ~/.config/less/.lesshst ] && rm ~/.config/less/.lesshst
+[ -f ~/.wget-hsts ] && rm ~/.wget-hsts
+[ -f ~/.config/wget/.wget-hsts ] && rm ~/.config/wget/.wget-hsts
+[ -f ~/.local/share/nvim/shada/main.shada ] && rm ~/.local/share/nvim/shada/main.shada
+[ -f ~/.local/share/zathura/history ] && rm ~/.local/share/zathura/history
+[ -f ~/.local/share/ranger/history ] && rm ~/.local/share/ranger/history
+[ -f ~/.local/share/weather.txt ] && rm ~/.local/share/weather.txt
+[ -f ~/.local/share/current-weather.txt ] && rm ~/.local/share/current-weather.txt
+[ -f ~/.cache/sc-iminfo ] && rm ~/.cache/sc-iminfo
+[ -f ~/.cache/ani-hsts ] && rm ~/.cache/ani-hsts
+[ -f ~/.cache/dmenu_run ] && rm ~/.cache/dmenu_run
+[ -d ~/.cache/sxiv/ ] && rm -rf ~/.cache/sxiv/
+[ -d ~/.cache/ranger/ ] && rm -rf ~/.cache/ranger/
+[ -d ~/.cache/thumbnails/ ] && rm -rf ~/.cache/thumbnails/
+[ -d ~/.cache/youtube-dl/ ] && rm -rf ~/.cache/youtube-dl/
+[ -f ~/.umpv_socket ] && rm ~/.umpv_socket
+[ -d ~/.visidata/ ] && rm -rf ~/.visidata/
+[ -d ~/.tldr/ ] && rm -rf ~/.tldr/
+
+# when leaving the console clear the screen to increase privacy
+if [ "$SHLVL" = 1 ]; then
+    [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+fi

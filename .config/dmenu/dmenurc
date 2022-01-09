@@ -1,0 +1,3 @@
+DMENU_FN="xft:Hack Nerd Font Mono:pixelsize=12"
+DMENU_OPTS='-i -nf #fcfcfc -nb #31363b -sf #31363b -sb #3daee9 -fn'
+J4_OPTS="dmenu -i -nb '#31363b' -nf '#fcfcfc' -sb '#3daee9' -sf '#31363b' -fn 'xft:Hack Nerd Font Mono:pixelsize=12'"

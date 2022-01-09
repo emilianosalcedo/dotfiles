@@ -1,0 +1,18 @@
+[submodule ".config/ranger/plugins/ranger_devicons"]
+	path = .config/ranger/plugins/ranger_devicons
+	url = https://github.com/alexanderjeurissen/ranger_devicons.git
+[submodule ".local/bin/ani-cli.sh"]
+	path = .local/bin/ani-cli.sh
+	url = https://github.com/pystardust/ani-cli.git
+[submodule ".local/bin/betterlockscreen.sh"]
+	path = .local/bin/betterlockscreen.sh
+	url = https://github.com/betterlockscreen/betterlockscreen.git
+[submodule ".local/bin/pfetch.sh"]
+	path = .local/bin/pfetch.sh
+	url = https://github.com/dylanaraps/pfetch.git
+[submodule ".local/bin/lsix.sh"]
+	path = .local/bin/lsix.sh
+	url = https://github.com/hackerb9/lsix.git
+[submodule ".local/bin/python/clipster.py"]
+	path = .local/bin/python/clipster.py
+	url = https://github.com/mrichar1/clipster.git

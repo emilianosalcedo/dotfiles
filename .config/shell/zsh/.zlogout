@@ -1,0 +1,1 @@
+/home/fenrir/.config/shell/zsh/zlogout

@@ -1,0 +1,306 @@
+# ~/.functions: definitions.
+# This file has to be sourced.
+
+#===============================================================================
+## -- FUNCTIONS ----------------------------------------------------------------
+#===============================================================================
+
+## EXTRACT ARCHIVES
+ext() {
+  if [ -f $1 ]; then
+    case $1 in
+      *.tar.bz2) tar xjf $1 ;;
+      *.tar.gz) tar xzf $1 ;;
+      *.tar.xz) tar xJf $1 ;;
+      *.bz2) bunzip2 $1 ;;
+      *.rar) unrar x $1 ;;
+      *.gz) gunzip $1 ;;
+      *.tar) tar xf $1 ;;
+      *.tbz2) tar xjf $1 ;;
+      *.tbz) tar xjf $1 ;;
+      *.tb2) tar xjf $1 ;;
+      *.tgz) tar xzf $1 ;;
+      *.txz) tar xJf $1 ;;
+      *.zip) unzip $1 ;;
+      *.Z) uncompress $1 ;;
+      *.tar.Z) uncompress $1 ;;
+      *.taz) uncompress $1 ;;
+      *.tz) uncompress $1 ;;
+      *.tlz) unlzma $1 ;;
+      *.tar.lz) unlzma $1 ;;
+      *.tar.lzma) unlzma $1 ;;
+      *.7z) 7z x $1 ;;
+      *) echo "'$1' cannot be extracted via ext()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+## RELOAD SHELL
+reload() {
+  if [ "$SHELL" = $(which zsh) ]; then
+    source "${XDG_CONFIG_HOME}/shell/zsh/zshrc"
+  elif [ "$SHELL" = $(which bash) ]; then
+    source "${XDG_CONFIG_HOME}/shell/bash/bashrc"
+  fi
+}
+
+## CALCULATOR
+calq() { bc -s -l <<< "scale = 20; ${@}"; }
+qalc() { dc -e "${@} pq"; }
+
+## UNIX TIME
+unixtime() { date -d @"${@}" '+%Y-%m-%d'; }
+
+## RANDOM PASSWORD
+randpw() { < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32}; echo; }
+
+## RANDOM NUMBER
+rnd() { hexdump -n 2 -e '/2 "%u"' /dev/urandom; }
+
+## CONVERT CSV TO ARRAY OF JSON OBJECTS
+csv2json() {
+  mlr --icsv --ojson filter '1 == 1' "${1}" | jq -n '[ inputs ]'
+}
+
+## CREATE THUMBNAIL
+thumbnail() {
+  ffmpeg -i "${1}" -ss 00:00:01 -frames:v 1 "${1%%.*}.png"
+}
+
+## CONVERT MARKDOWN TO PDF
+md2any() {
+  ext="${1}"
+  shift
+  pandoc -s -o "${1%%.*}.${ext}" "${1}"
+}
+
+## WEBCAM
+webcam-mpv() {
+  device="$(v4l2-ctl --list-devices | grep -A 1 'USB 2.0 Camera' | grep -o "/dev/video.")"
+  #mpv av://v4l2:"${device}" --profile=low-latency --untimed
+  mpv --input-ipc-server="" --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:"${device}"
+}
+
+## TWITCH STREAM THROUGH MPV AND STREAMLINK
+twitch() { 
+  first="$1"
+  second="$2"
+  shift 2
+
+  setsid streamlink -a "--input-ipc-server='' ${*} -- {filename}" "twitch.tv/${first}" "${second}" >/dev/null 2>&1 & 
+}
+
+## UMPV - MPV UNIQUE INSTANCE
+umpv() {
+  args=""
+  mpv="$(command -v mpv)"
+
+  for i in "${@}"; do
+    case "${i}" in
+      --*) args="${args} ${i}" && shift ;;
+    esac
+  done
+
+  if [ "${#args## }" -gt 0 ]; then
+    setsid env MPV="${mpv} ${args## }" umpv.py "${@}" >/dev/null 2>&1 &
+  else
+    setsid umpv.py "${@}" >/dev/null 2>&1 &
+  fi
+}
+
+## RECORD LIVE STREAM
+reclive() {
+  ffmpeg -y -i $(youtube-dl -g "${1}") -c copy /tmp/dump.ts
+}
+
+## EXECUTE COMMAND IN BACKGROUND
+background() { setsid "${@}" >/dev/null 2>&1 & }
+
+## INITIATE LAMP SERVER
+lampp() { sudo /opt/lampp/lampp "${@}"; }
+
+## LIST PIP3 INSTALLED PACKAGES
+pip-list() {
+  pip3 freeze --local
+}
+
+## LIST NPM INSTALLED PACKAGES
+npm-list() {
+  npm list -g --depth=0
+}
+
+# RANGER-CD AND RANGER-LEVEL
+ranger() {
+  local IFS=$'\t\n'
+  local tempfile="$(mktemp -t tmp.XXXXXX)"
+  local ranger_cmd=(
+    command
+    ranger
+    --cmd="map Q chain shell echo %d > "$tempfile"; quitall"
+  )
+    
+  if [ -z "$RANGER_LEVEL" ]; then
+    ${ranger_cmd[@]} "$@"
+  else
+    exit
+  fi
+
+  if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+    cd -- "$(cat "$tempfile")" || return
+  fi
+
+  command rm -f -- "$tempfile" 2>/dev/null
+}
+
+## SEARCH YOUTUBE
+ytsearch() {
+  videos=$(mktemp)
+  lista=$(mktemp)
+  titulos=$(mktemp)
+
+  youtube-dl -j "ytsearch5: ${1}" > "${videos}"
+  shift
+  jq '{titulo: .fulltitle, url: .webpage_url}' < "${videos}" > "${lista}"
+  sed '1s@{@[\n{@g; $s@}@}\n]@g; s@}@},@g' "${lista}" | tac | sed '2s@},@}@g' | tac > "${videos}"
+  jq '.[].titulo' < "${videos}" > "${lista}"
+
+  while IFS=\" read -r line; do
+      echo "${line}" >> "${titulos}"
+  done < "${lista}"
+
+  sed -i 's/\s/-/g' "${titulos}"
+  lines=$(cat ${titulos})
+  echo
+
+  for i in $lines; do
+    echo "${i}" | sed 's/-/ /g'
+  done | nl
+
+  while true; do
+    printf "\n%s" "Enter video number: "
+    read number
+
+    case "${number}" in
+      ''|*[!0-9]*) 
+        echo "Error: incorrect option."
+        return
+        ;;
+      *) 
+        link=$(jq -r ".[${number} - 1].url" < "${videos}")
+        echo "${link}"
+        mpv "${@}" "${link}"
+        break
+        ;;
+    esac
+  done
+
+  rm "${videos}" "${lista}" "${titulos}" >/dev/null 2>&1
+}
+
+#===============================================================================
+## -- API SERVICES REQUESTS (CLI) ----------------------------------------------
+#===============================================================================
+
+## CURL CLI PASTEBIN ALTERNATIVE (SPRUNGE)
+sprunge() {
+  if [[ $1 ]]; then
+    curl -F 'sprunge=<-' "http://sprunge.us" < "$1"
+  else
+    curl -F 'sprunge=<-' "http://sprunge.us"
+  fi
+}
+
+## PASTEBIN ALTERNATIVE (IXIO)
+ixio() {
+  local opts
+  local OPTIND
+
+  [ -f "$HOME/.netrc" ] && opts='-n'
+
+  while getopts ":hd:i:n:" x; do
+    case $x in
+      h) echo "ix [-d ID] [-i ID] [-n N] [opts]"; return;;
+      d) $echo curl $opts -X DELETE ix.io/$OPTARG; return;;
+      i) opts="$opts -X PUT"; local id="$OPTARG";;
+      n) opts="$opts -F read:1=$OPTARG";;
+    esac
+  done
+
+  shift $(($OPTIND - 1))
+
+  [ -t 0 ] && {
+    local filename="$1"
+    shift
+
+    [ "$filename" ] && {
+      curl $opts -F f:1=@"$filename" $* ix.io/$id
+      return
+    }
+
+    echo "^C to cancel, ^D to send."
+  }
+
+  curl $opts -F f:1='<-' $* ix.io/$id
+}
+
+## PASTEBIN ALTERNATIVE POST REQUEST (PASTEC)
+pastec-post() {
+  local url='https://paste.c-net.org/'
+
+  if (( $# )); then
+    local file
+
+    for file; do
+      curl -s \
+        --data-binary @"$file" \
+        --header "X-FileName: ${file##*/}" \
+        "$url"
+    done
+
+  else
+    curl -s --data-binary @- "$url"
+  fi
+}
+
+## PASTEBIN ALTERNATIVE GET REQUEST (PASTEC)
+pastec-get() {
+  local url='https://paste.c-net.org/'
+
+  if (( $# )); then
+    local arg
+
+    for arg; do
+      curl -s "${url}${arg##*/}"
+    done
+  else
+    local arg
+
+    while read -r arg; do
+      curl -s "${url}${arg##*/}"
+    done
+  fi
+}
+
+## SHELL CHEATSHEET
+cheat() { 
+  curl "cheat.sh/$@"
+  #curl -s "cheat.sh/$@";
+  #curl -s "cht.sh/$@";
+}
+
+## QR ENCODE
+qrenco() {
+  #printf "$@" | curl -F-=\<- qrenco.de;
+  curl -s "qrenco.de/$@";
+}
+
+## CRYPTOS
+coins() { curl -s "https://rate.sx/$@"; }
+
+## SHORT URLS
+shorten() { curl -F "shorten=https://$@" https://0x0.st; }
+
+## WEATHER
+wttr() { curl -s -H "Accept-Language: es" "http://wttr.in/${@}"; }

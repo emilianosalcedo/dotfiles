@@ -1,0 +1,206 @@
+!! URXVT #######################################################################
+
+!! OPTIONS ---------------------------------------------------------------------
+
+!#include "/path/file"
+URxvt.depth: 32
+!URxvt.saveline: 15000
+!URxvt.termName: rxvt-256color
+URxvt.iso14755: false
+!URxvt.geometry: 80x24
+!URxvt.tabbed.tabbar-fg: 4
+!URxvt.tabbed.tabbar-bg: 16
+!URxvt.tabbed.tab-fg: 15
+!URxvt.tabbed.tab-bg: 4
+!URxvt.buffered: false
+!URxvt.matcher.button: 1
+URxvt.transparent: false
+!URxvt.shading: 0
+!URxvt.fading: 0
+!URxvt.urgentOnBell: true
+!URxvt.visualBell: true
+!URxvt.loginShell: true
+!URxvt.perl-lib: /usr/lib/urxvt/perl/
+URxvt.perl-ext-common: default,font-size,url-select,matcher,clipboard
+!URxvt.font-size.step: 1
+
+!! VARIABLES -------------------------------------------------------------------
+
+#define font1 Inconsolata Nerd Font Mono
+#define font2 Symbola
+#define font3 Noto Color Emoji
+#define font4 forkawesome
+#define font5 PowerlineSymbols
+#define reg style=Regular
+#define bol style=Bold
+#define ita style=Italic
+#define bit style=Bold Italic
+#define fnpt size=9
+#define fnpx pixelsize=7
+#define fontopt fnpt:antialias=true:hinting=slight:minspace=false
+#define fn1reg xft:font1:fontopt:reg
+#define fn2reg xft:font2:fontfall:reg
+#define fn3reg xft:font3:fontfall:reg
+#define fn4reg xft:font4:fontfall:reg
+#define fn5reg xft:font5:fontfall:reg
+#define fn1bol xft:font1:fontopt:bol
+#define fn2bol xft:font2:fontfall:bol
+#define fn3bol xft:font3:fontfall:bol
+#define fn4bol xft:font4:fontfall:bol
+#define fn5bol xft:font5:fontfall:bol
+#define fn1ita xft:font1:fontopt:ita
+#define fn2ita xft:font2:fontfall:ita
+#define fn3ita xft:font3:fontfall:ita
+#define fn4ita xft:font4:fontfall:ita
+#define fn5ita xft:font5:fontfall:ita
+#define fn1bit xft:font1:fontopt:bit
+#define fn2bit xft:font2:fontfall:bit
+#define fn3bit xft:font3:fontfall:bit
+#define fn4bit xft:font4:fontfall:bit
+#define fn5bit xft:font5:fontfall:bit
+#define fontfall fnpx:antialias=true:hinting=slight:minspace=false
+#define fontreg fn1reg, fn2reg, fn3reg, fn4reg, fn5reg
+#define fontbol fn1bol, fn2bol, fn3bol, fn4bol, fn5bol
+#define fontita fn1ita, fn2ita, fn3ita, fn4ita, fn5ita
+#define fontbit fn1bit, fn2bit, fn3bit, fn4bit, fn5bit
+
+!! FONTS -----------------------------------------------------------------------
+
+URxvt.font: fontreg
+URxvt.boldFont: fontbol
+URxvt.italicFont: fontita
+URxvt.boldItalicFont: fontbit
+URxvt.allow_bold: true
+URxvt.letterSpace: -1
+URxvt.lineSpace: 0
+
+!! BORDERS ---------------------------------------------------------------------
+
+URxvt.internalBorder: 0
+URxvt.externalBorder: 0
+URxvt.borderless: true
+
+!! SCROLLBAR -------------------------------------------------------------------
+
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.scrollKey: true
+URxvt.scrollstyle: plain
+
+!! COPY/PASTE ------------------------------------------------------------------
+
+URxvt.copyCommand: xclip -i -selection clipboard
+URxvt.pasteCommand: xclip -o -selection clipboard
+
+!! CURSOR ----------------------------------------------------------------------
+
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+
+!! URLS ------------------------------------------------------------------------
+
+!URxvt.url-launcher: /usr/bin/firefox
+!URxvt.url-select.autocopy:true
+URxvt.urlLauncher: xdg-open
+URxvt.underlineURLs: true
+URxvt.urlButton: 1
+
+!! COLORS ----------------------------------------------------------------------
+
+URxvt.foreground:          #fcfcfc
+URxvt.background:          #313639
+!URxvt.cursorColor:        #fcfcfc
+!URxvt.scrollColor:        #4d4d4d
+!URxvt.borderColor:        #3daee9
+!URxvt.highlightColor:     #fdbc4b
+!URxvt.highlightTextColor: #f67400
+
+!! KEYS ------------------------------------------------------------------------
+
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-Insert: eval:paste_primary
+!URxvt.keysym.Shift-Up: command:\033]720;1\007
+!URxvt.keysym.Shift-Down: command:\033]721;1\007
+!URxvt.keysym.Control-Up: \033[1;5A
+!URxvt.keysym.Control-Down: \033[1;5B
+!URxvt.keysym.Control-Right: \033[1;5C
+!URxvt.keysym.Control-Left: \033[1;5D
+!URxvt.keysym.M-Escape: perl:keyboard-select:activate
+!URxvt.keysym.M-s: perl:keyboard-select:search
+!URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.keysym.C-plus: font-size:increase
+URxvt.keysym.C-minus: font-size:decrease
+URxvt.keysym.C-zero: font-size:reset
+
+!! XTERM #######################################################################
+
+!! FONTS -----------------------------------------------------------------------
+
+XTerm*faceName: font1
+XTerm*faceSize: 9
+UXTerm*faceName: font1
+UXTerm*faceSize: 9
+
+!! COLORS ----------------------------------------------------------------------
+
+XTerm*background:  #313639
+XTerm*foreground:  #fcfcfc
+UXTerm*background: #313639
+UXTerm*foreground: #fcfcfc
+
+!! GLOBAL ######################################################################
+
+!! FONTS -----------------------------------------------------------------------
+
+Xft.autohint: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.antialias: true
+Xft.rgba: none
+Xft.dpi: 96
+
+!! CURSOR ----------------------------------------------------------------------
+
+!Xcursor.theme: DMZ-Black
+!Xcursor.size: 16
+
+!! COLORS ----------------------------------------------------------------------
+
+! SPECIAL
+*.foreground:   #fcfcfc
+*.background:   #31363b
+*.cursorColor:  #fcfcfc
+*borderColor:   #31363b
+
+! BLACK
+*.color0:       #232629
+*.color8:       #4d4d4d
+
+! RED
+*.color1:       #da4453
+*.color9:       #ed1515
+
+! GREEN
+*.color2:       #11d116
+*.color10:      #2ecc71
+
+! YELLOW
+*.color3:       #f67400
+*.color11:      #fdbc4b
+
+! BLUE
+*.color4:       #3daee9
+*.color12:      #1d99f3
+
+! MAGENTA
+*.color5:       #85678f
+*.color13:      #b294bb
+
+! CYAN
+*.color6:       #1cdc9a
+*.color14:      #3498db
+
+! WHITE
+*.color7:       #fcfcfc
+*.color15:      #eff0f1
