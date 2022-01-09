@@ -3,6 +3,7 @@ privkey.asc
 subkey.gpg
 bookmarks.html
 bookmarks.db*
+**/calcurse/.calcurse.pid
 **/calcurse/todo
 **/calcurse/apts
 **/calcurse/notes/**
