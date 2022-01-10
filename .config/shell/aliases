@@ -9,7 +9,7 @@
 ## sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 #alias ls='ls -CNh --sort=extension --color=auto --group-directories-first --time-style=long-iso'
-alias ls='exa -g -h --extended --sort=extension --colour=automatic --colour-scale --group-directories-first --time-style=long-iso --git --icons'
+alias ls='exa -g -h --extended --sort=extension --colour=automatic --colour-scale --group-directories-first --time-style=long-iso --icons'
 alias lh='ls -d .[^.]*'
 alias ld='ls -d */'
 alias ll='ls -l'
