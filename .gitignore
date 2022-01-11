@@ -1,5 +1,8 @@
 **/.zcompdump*
 *.log
+.config/mpd/pid
+.config/mpd/state
+.config/mpd/log
 password-store/
 privkey.asc
 subkey.gpg
