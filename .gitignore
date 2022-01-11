@@ -1,4 +1,5 @@
 **/.zcompdump*
+*.log
 password-store/
 privkey.asc
 subkey.gpg

@@ -1,0 +1,66 @@
+##############################################################
+## This is the example bindings file. Copy it to            ##
+## ~/.ncmpcpp/bindings or $XDG_CONFIG_HOME/ncmpcpp/bindings ##
+## and set up your preferences                              ##
+##############################################################
+
+def_key "0"
+    show_help
+def_key "9"
+    show_clock
+def_key "-"
+    volume_down
+def_key "+"
+    volume_up
+def_key "j"
+    scroll_down
+def_key "k"
+    scroll_up
+def_key "ctrl-u"
+    page_up
+def_key "ctrl-d"
+    page_down
+def_key "u"
+    page_up
+def_key "d"
+    page_down
+def_key "."
+    show_lyrics
+def_key "n"
+    next_found_item
+def_key "N"
+    previous_found_item
+def_key "J"
+    move_sort_order_down
+def_key "K"
+    move_sort_order_up
+def_key "h"
+    previous_column
+def_key "h"
+  jump_to_parent_directory
+def_key "l"
+    next_column
+def_key "l"
+  enter_directory
+def_key "l"
+  run_action
+def_key "l"
+  play_item
+def_key "G"
+  move_end
+def_key "g"
+  move_home
+def_key "U"
+  update_database
+def_key "x"
+  delete_playlist_items
+def_key "s"
+  stop
+def_key "ctrl-v"
+  select_range
+def_key "V"
+  reverse_selection
+def_key "escape"
+  remove_selection
+def_key "v"
+  select_item
