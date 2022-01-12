@@ -44,8 +44,10 @@ mapkey('gR', 'Go to last activated tab', () => {
   RUNTIME('historyTab', {index: -1});
 }, {repeatIgnore: true});
 
-mapkey('U', 'Page Up', () => { window.scrollBy(0, -700); });
-mapkey('D', 'Page Down', () => { window.scrollBy(0, 700); });
+//mapkey('U', 'Page Up', () => { window.scrollBy(0, -700); });
+//mapkey('D', 'Page Down', () => { window.scrollBy(0, 700); });
+mapkey('U', 'Page Up', () => { window.scrollTo(0, window.pageYOffset + window.innerHeight * -0.9); });
+mapkey('D', 'Page Down', () => { window.scrollTo(0, window.pageYOffset + window.innerHeight * 0.9); });
 mapkey(',m', 'Mute/Unmute current tab', () => { RUNTIME('muteTab'); });
 
 /** OPEN NEW TAB PAGE (HOME) IN CURRENT TAB */
